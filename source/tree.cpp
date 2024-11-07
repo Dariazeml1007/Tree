@@ -9,6 +9,9 @@
 
 void insert_node (Node *node, int value)
 {
+
+    assert(node);
+
     if (value < node->date)
     {
         if (node->left == NULL)
@@ -22,10 +25,10 @@ void insert_node (Node *node, int value)
     }
     else
     {
-        if (node->left == NULL)
+        if (node->right == NULL)
         {
             struct Node *new_node = (Node *) calloc (1, sizeof(Node));
-            node->left = new_node;
+            node->right = new_node;
 
             new_node->date = value;
         }
@@ -44,11 +47,9 @@ void print_tree (Node *node)
         return;
     }
     printf ("(");
-
+    printf ("%d", node->date);
     if (node->left)
         print_tree(node->left);
-
-    printf ("%d", node->date);
 
     if (node->right)
         print_tree(node->right);

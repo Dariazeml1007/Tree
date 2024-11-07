@@ -1,0 +1,17 @@
+digraph structs {
+rankdir=HR;
+node[color= "#003A8C",style="filled", fillcolor="#B4FBFF", fontsize=14];
+edge[color="black", weight = 9,fontsize=14];
+el_0061FF10 [shape=record, label= "date = 50"];
+el_0061FF04 [shape=record, label= "date = 30"];
+el_01051620 [shape=record, label= "date = 10"];
+el_01051638 [shape=record, label= "date = 35"];
+el_0061FEF8 [shape=record, label= "date = 70"];
+el_01051650 [shape=record, label= "date = 60"];
+el_0061FF10->el_0061FF04;
+el_0061FF04->el_01051620;
+el_0061FF04->el_01051638;
+el_0061FF10->el_0061FEF8;
+el_0061FEF8->el_01051650;
+
+}

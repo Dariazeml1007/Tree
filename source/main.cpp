@@ -6,10 +6,17 @@
 #include <stdbool.h>
 
 #include "tree.h"
-
+#include "tree_dump.h"
 
 int main()
 {
+
+    FILE *file = fopen ("dump.dot", "w");
+    if (!file)
+    {
+        printf("File hasn't opened");
+        return 0;
+    }
     struct Node node_50 = {};
 
     node_50.date = 50;
@@ -28,15 +35,20 @@ int main()
     node_70.right = NULL;
     node_70.left = NULL;
 
-
     node_50.right = &node_70;
-
-    print_tree (&node_50);
-
-    printf ("\n");
-
     insert_node(&node_50, 10);
+    insert_node(&node_50, 35);
+    insert_node(&node_50, 60);
 
-    print_tree (&node_50);
+    print_tree(&node_50);
+    dump (&node_50, file);
+
+
+    if (fclose(file) != 0)
+    {
+        printf ("File hasn't closed");
+        return 0;
+    }
+
 }
 
