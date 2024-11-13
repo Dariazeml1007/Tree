@@ -1,0 +1,30 @@
+{"is MIPT subject"
+    {"Math"
+        {"about limits, differentials"
+            {
+            "Calculus"
+            }
+            {
+            "about vectors, basis?"
+                {
+                    "Angem"
+                }
+                {
+                    "Discra"
+                }
+            }
+        }
+        {
+        "hard suffer?"
+            {
+             "Physics"
+            }
+            {
+            "Proga"
+            }
+        }
+    }
+    {
+    "Humanitarian"
+    }
+}

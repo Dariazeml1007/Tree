@@ -4,12 +4,16 @@
 #include <assert.h>
 #include <string.h>
 #include <stdbool.h>
+#include <sys\stat.h>
 
 #include "tree.h"
 #include "tree_dump.h"
+#include "akinator.h"
 
-int main()
+int main(const int argc, const char* argv[])
 {
+    struct Node node = {};
+    struct Tree my_tree = {};
 
     FILE *file = fopen ("dump.dot", "w");
     if (!file)
@@ -17,32 +21,33 @@ int main()
         printf("File hasn't opened");
         return 0;
     }
-    struct Node node_50 = {};
 
-    node_50.date = 50;
-    node_50.right = NULL;
-    node_50.left = NULL;
+    my_tree.name_file = "tree.txt";
+    if (reading_tree (&my_tree) != TREE_SUCCESS)
+        assert(0 && "Reading tree from file error");
 
-    struct Node node_30 = {};
-    node_30.date = 30;
-    node_30.right = NULL;
-    node_30.left = NULL;
+    import_to_tree (&my_tree, &node);
 
-    node_50.left = &node_30;
+    dump (&node, file);
 
-    struct Node node_70 = {};
-    node_70.date = 70;
-    node_70.right = NULL;
-    node_70.left = NULL;
+    if (argc == 1)
+    {
+        printf ("You can use flag --guess\n"
+                "You can use flag --define\n");
+        return TREE_SUCCESS;
+    }
 
-    node_50.right = &node_70;
-    insert_node(&node_50, 10);
-    insert_node(&node_50, 35);
-    insert_node(&node_50, 60);
-
-    print_tree(&node_50);
-    dump (&node_50, file);
-
+    if (argc == 2)
+    {
+        if (strcmp(argv[1], "--guess") == 0)
+        {
+            guess(&node);
+        }
+        else
+        {
+            printf ("Not correct command");
+        }
+    }
 
     if (fclose(file) != 0)
     {

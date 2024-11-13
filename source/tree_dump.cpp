@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <string.h>
 #include <stdbool.h>
+#include <sys\stat.h>
 
 #include "tree.h"
 #include "tree_dump.h"
@@ -34,7 +35,9 @@ void print_node_in_file (Node *node, FILE * pointer_file)
         printf ("NULL pointer\n");
         return;
     }
-    fprintf (pointer_file, "el_%p [shape=record, label= \"date = %d\"];\n", &node->date, node->date);
+    fprintf (pointer_file, "el_%p [shape=record, label= \""
+                            specif_for_tree_elem
+                            "\"];\n", &node->date, node->date);
 
     if (node->left)
         print_node_in_file(node->left, pointer_file);

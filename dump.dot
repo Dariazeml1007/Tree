@@ -2,16 +2,26 @@ digraph structs {
 rankdir=HR;
 node[color= "#003A8C",style="filled", fillcolor="#B4FBFF", fontsize=14];
 edge[color="black", weight = 9,fontsize=14];
-el_0061FF10 [shape=record, label= "date = 50"];
-el_0061FF04 [shape=record, label= "date = 30"];
-el_01051620 [shape=record, label= "date = 10"];
-el_01051638 [shape=record, label= "date = 35"];
-el_0061FEF8 [shape=record, label= "date = 70"];
-el_01051650 [shape=record, label= "date = 60"];
-el_0061FF10->el_0061FF04;
-el_0061FF04->el_01051620;
-el_0061FF04->el_01051638;
-el_0061FF10->el_0061FEF8;
-el_0061FEF8->el_01051650;
+el_0061FF10 [shape=record, label= "is MIPT subject"];
+el_00F42998 [shape=record, label= "Humanitarian"];
+el_00F418E0 [shape=record, label= "Math"];
+el_00F42950 [shape=record, label= "hard suffer?"];
+el_00F42980 [shape=record, label= "Proga"];
+el_00F42968 [shape=record, label= "Physics"];
+el_00F428D8 [shape=record, label= "about limits, differentials"];
+el_00F42908 [shape=record, label= "about vectors, basis?"];
+el_00F42938 [shape=record, label= "Discra"];
+el_00F42920 [shape=record, label= "Angem"];
+el_00F428F0 [shape=record, label= "Calculus"];
+el_0061FF10->el_00F42998;
+el_0061FF10->el_00F418E0;
+el_00F418E0->el_00F42950;
+el_00F42950->el_00F42980;
+el_00F42950->el_00F42968;
+el_00F418E0->el_00F428D8;
+el_00F428D8->el_00F42908;
+el_00F42908->el_00F42938;
+el_00F42908->el_00F42920;
+el_00F428D8->el_00F428F0;
 
 }
