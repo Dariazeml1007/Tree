@@ -9,51 +9,41 @@
 #include "tree.h"
 #include "tree_dump.h"
 #include "akinator.h"
+#include "arg.h"
+
+
 
 int main(const int argc, const char* argv[])
 {
     struct Node node = {};
     struct Tree my_tree = {};
+    struct Argv_type flags = {};
+    my_tree.root_tree = &node;
 
-    FILE *file = fopen ("dump.dot", "w");
-    if (!file)
-    {
-        printf("File hasn't opened");
-        return 0;
-    }
+    if (tree_ctor (&my_tree, "tree.txt", "dump.dot") != TREE_SUCCESS)
+        assert(0 && "Ctor tree error");
 
-    my_tree.name_file = "tree.txt";
     if (reading_tree (&my_tree) != TREE_SUCCESS)
         assert(0 && "Reading tree from file error");
 
     import_to_tree (&my_tree, &node);
 
-    dump (&node, file);
+    dump (&node, my_tree.pfile_dump);
 
-    if (argc == 1)
+    process_args(argc, argv, &flags);
+
+    if (flags.is_define)
     {
-        printf ("You can use flag --guess\n"
-                "You can use flag --define\n");
-        return TREE_SUCCESS;
+        if (define (&my_tree) != TREE_SUCCESS)
+            assert(0 && "Define error");
     }
 
-    if (argc == 2)
+    if (flags.is_guess)
     {
-        if (strcmp(argv[1], "--guess") == 0)
-        {
-            guess(&node);
-        }
-        else
-        {
-            printf ("Not correct command");
-        }
+        guess(&node);
     }
 
-    if (fclose(file) != 0)
-    {
-        printf ("File hasn't closed");
-        return 0;
-    }
+    tree_dtor(&my_tree);
 
 }
 

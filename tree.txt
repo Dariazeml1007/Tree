@@ -1,11 +1,11 @@
-{"is MIPT subject"
+{"MIPT subject"
     {"Math"
         {"about limits, differentials"
             {
             "Calculus"
             }
             {
-            "about vectors, basis?"
+            "about vectors, basis"
                 {
                     "Angem"
                 }
@@ -15,7 +15,7 @@
             }
         }
         {
-        "hard suffer?"
+        "hard suffer"
             {
              "Physics"
             }

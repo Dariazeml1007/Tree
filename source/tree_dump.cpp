@@ -35,9 +35,9 @@ void print_node_in_file (Node *node, FILE * pointer_file)
         printf ("NULL pointer\n");
         return;
     }
-    fprintf (pointer_file, "el_%p [shape=record, label= \""
+    fprintf (pointer_file, "el_%p [shape=record, label= \"address = %p|"
                             specif_for_tree_elem
-                            "\"];\n", &node->date, node->date);
+                            "| addr_parent = %p\"];\n", &node->data, &node->data, node->data, node->parent);
 
     if (node->left)
         print_node_in_file(node->left, pointer_file);
@@ -56,16 +56,16 @@ void print_edge_in_file (Node *node, FILE * pointer_file)
 
     if (node->left)
     {
-        fprintf (pointer_file, "el_%p", &node->date);
+        fprintf (pointer_file, "el_%p", &node->data);
         fprintf (pointer_file, "->");
-        fprintf (pointer_file, "el_%p;\n", &node->left->date);
+        fprintf (pointer_file, "el_%p;\n", &node->left->data);
         print_edge_in_file(node->left, pointer_file);
     }
     if (node->right)
     {
-        fprintf (pointer_file, "el_%p", &node->date);
+        fprintf (pointer_file, "el_%p", &node->data);
         fprintf (pointer_file, "->");
-        fprintf (pointer_file, "el_%p;\n", &node->right->date);
+        fprintf (pointer_file, "el_%p;\n", &node->right->data);
         print_edge_in_file(node->right, pointer_file);
     }
 }

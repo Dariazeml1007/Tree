@@ -7,6 +7,7 @@
 #include <sys\stat.h>
 
 #include "tree.h"
+#include "akinator.h"
 
 int get_size_of_file (const char *name_of_file);
 
@@ -14,18 +15,18 @@ int reading_tree (Tree *my_tree)
 {
     assert(my_tree);
 
-    my_tree->file = fopen (my_tree->name_file, "r");
-    if (!my_tree->file)
+    my_tree->pfile_tree = fopen (my_tree->name_of_file_with_tree, "r");
+    if (!my_tree->pfile_tree)
     {
         printf("File hasn't opened");
         return TREE_FILE_NOT_OPENED;
     }
 
-    int size = get_size_of_file(my_tree->name_file);
+    int size = get_size_of_file(my_tree->name_of_file_with_tree);
     my_tree->text = (char *) calloc(size, sizeof(char));
-    fread(my_tree->text, sizeof(char), size, my_tree->file);
+    fread(my_tree->text, sizeof(char), size, my_tree->pfile_tree);
 
-    if (fclose(my_tree->file) != 0)
+    if (fclose(my_tree->pfile_tree) != 0)
     {
         printf ("File hasn't closed");
         return TREE_FILE_NOT_CLOSED;
@@ -43,7 +44,7 @@ void import_to_tree (Tree *my_tree, Node *node)
     {
         my_tree->text++;
     }
-    node->date = ++my_tree->text ;
+    node->data = ++my_tree->text ;
 
     while (*my_tree->text != '\"')
     {
@@ -53,7 +54,6 @@ void import_to_tree (Tree *my_tree, Node *node)
 
     while (*my_tree->text != '{' && *my_tree->text != '}')
     {
-
         my_tree->text++;
     }
 
@@ -61,9 +61,11 @@ void import_to_tree (Tree *my_tree, Node *node)
     {
         struct Node *new_node_right = (Node*)calloc (1, sizeof(struct Node));
         node->right = new_node_right;
+        node->right->parent = node;
         import_to_tree(my_tree, node->right);
         struct Node *new_node_left = (Node*)calloc (1, sizeof(struct Node));
         node->left = new_node_left;
+        node->left->parent = node;
         import_to_tree(my_tree, node->left);
     }
     else
@@ -93,13 +95,13 @@ void insert_node (Node *node, info_t value)
 
     assert(node);
 
-    if (value < node->date)
+    if (value < node->data)
     {
         if (node->left == NULL)
         {
             struct Node *new_node = (Node*)calloc (1, sizeof(struct Node));
             node->left = new_node;
-            new_node->date = value;
+            new_node->data = value;
         }
         else
             insert_node(node->left, value);
@@ -111,7 +113,7 @@ void insert_node (Node *node, info_t value)
             struct Node *new_node = (Node *) calloc (1, sizeof(Node));
             node->right = new_node;
 
-            new_node->date = value;
+            new_node->data = value;
         }
         else
             insert_node(node->right, value);
@@ -128,7 +130,7 @@ void print_tree (Node *node)
         return;
     }
     printf ("(");
-    printf (specif_for_tree_elem, node->date);
+    printf (specif_for_tree_elem, node->data);
     if (node->left)
         print_tree(node->left);
 
@@ -136,3 +138,63 @@ void print_tree (Node *node)
         print_tree(node->right);
     printf (")");
 }
+
+int tree_ctor (Tree *my_tree, const char *name_of_file_with_tree, const char * name_of_dump_file)
+{
+    assert(my_tree);
+    assert(name_of_file_with_tree);
+    assert(name_of_dump_file);
+
+    my_tree->name_of_file_with_tree = name_of_file_with_tree;
+    my_tree->name_of_dump_file = name_of_dump_file;
+
+    my_tree->pfile_dump = fopen (my_tree->name_of_dump_file, "w");
+    if (!my_tree->pfile_dump)
+    {
+        printf("File hasn't opened");
+        return TREE_FILE_NOT_OPENED;
+    }
+
+    return TREE_SUCCESS;
+
+}
+
+int tree_dtor (Tree *my_tree)
+{
+    assert(my_tree);
+
+    if (fclose(my_tree->pfile_dump) != 0)
+    {
+        printf ("File hasn't closed");
+        node_dtor(my_tree->root_tree);
+        return TREE_FILE_NOT_CLOSED;
+    }
+
+    node_dtor(my_tree->root_tree);
+    return TREE_SUCCESS;
+}
+
+
+void node_dtor (Node *node)
+{
+    assert(node);
+
+    if (!is_leaf(node->right))
+
+        node_dtor(node->right);
+
+    else
+        free(node->right);
+
+    if (!is_leaf(node->left))
+
+        node_dtor(node->left);
+
+    else
+        free(node->left);
+
+    free(node);
+    return;
+
+}
+
