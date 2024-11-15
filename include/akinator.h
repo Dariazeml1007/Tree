@@ -4,7 +4,7 @@
 #include "tree.h"
 
 Node* search (Node *node, const char *item);
-void guess(Node *node);
+void guess(Tree *my_tree);
 bool is_leaf(Node *node);
 int define (Tree * my_tree);
 

@@ -10,38 +10,40 @@
 #include "tree.h"
 
 const int size_of_node_array = 15;
-const int max_size = 50;;
+const int max_size = 50;
+const int size_of_answer = 5;
 
-void guess(Node *node)
+void guess(Tree *my_tree)
 {
-    //Node *current_node = tree->root;
-    //
-    //while(...){
-    //  if(yes) current_node = current_node->left;
-    //  if(no) current_node = current_node->right;
-    //}
+    assert(my_tree);
+    Node *current_node = my_tree->root_tree;
 
-    printf ("%s?\nAnswer:", node->data);
-    char answer[5] = ""; /*constanta blyaaaaaat*/
-    scanf("%s", answer);
-    if (strcmp(answer, "YES") == 0)
+    char answer[size_of_answer] = "";
+    while(true)
     {
-        if (node->right)
-            guess(node->right);
-        else
+        printf ("%s?\nAnswer:", current_node->data);
+        scanf("%s", answer);
+        if(strcmp(answer, "YES") == 0)
         {
-            printf ("You have guessed %s", node->data);
-            return;
+            if (!is_leaf(current_node))
+                current_node = current_node->right;
+            else
+            {
+                printf ("You have guessed %s", current_node->data);
+                break;
+            }
+
         }
-    }
-    else if (strcmp(answer, "NO") == 0)
-    {
-        if (node->left)
-            guess(node->left);
-        else
+        else if(strcmp(answer, "NO") == 0)
         {
-            printf ("Sorry, we don't know ");
-            return;
+            if (!is_leaf(current_node))
+                current_node = current_node->left;
+            else
+            {
+                printf ("Sorry, we don't know ");
+                break;
+            }
+
         }
     }
 

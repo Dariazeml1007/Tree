@@ -40,7 +40,7 @@ int main(const int argc, const char* argv[])
 
     if (flags.is_guess)
     {
-        guess(&node);
+        guess(&my_tree);
     }
 
     tree_dtor(&my_tree);
