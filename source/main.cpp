@@ -28,21 +28,30 @@ int main(const int argc, const char* argv[])
 
     import_to_tree (&my_tree, &node);
 
-    dump (&node, my_tree.pfile_dump);
+    //dump (&node, my_tree.pfile_dump);
 
     process_args(argc, argv, &flags);
 
     if (flags.is_define)
     {
         if (define (&my_tree) != TREE_SUCCESS)
+        {
+            tree_dtor(&my_tree);
             assert(0 && "Define error");
+        }
     }
 
     if (flags.is_guess)
     {
-        guess(&my_tree);
+        if (guess(&my_tree) != TREE_SUCCESS)
+        {
+            tree_dtor(&my_tree);
+            printf("problem");
+            assert(0 && "Guess error");
+        }
     }
 
+    dump (&node, my_tree.pfile_dump);
     tree_dtor(&my_tree);
 
 }

@@ -34,13 +34,14 @@ struct Tree
     FILE *pfile_dump;
     Node *root_tree;
 };
-void insert_node (Node *node, info_t value);
+
 void print_tree (Node *node);
 int reading_tree (Tree *my_tree);
 void import_to_tree (Tree *my_tree, Node *node);
 void node_dtor (Node *node);
 int tree_ctor (Tree *my_tree, const char *name_of_file_with_tree, const char * name_of_dump_file);
 int tree_dtor (Tree *my_tree);
+
 #endif
 
 

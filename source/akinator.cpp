@@ -13,7 +13,7 @@ const int size_of_node_array = 15;
 const int max_size = 50;
 const int size_of_answer = 5;
 
-void guess(Tree *my_tree)
+int guess(Tree *my_tree)
 {
     assert(my_tree);
     Node *current_node = my_tree->root_tree;
@@ -40,14 +40,81 @@ void guess(Tree *my_tree)
                 current_node = current_node->left;
             else
             {
-                printf ("Sorry, we don't know ");
-                break;
+                printf ("Sorry, we don't know, do you what to broad my base ?\n");
+                scanf("%s", answer);
+                if(strcmp(answer, "YES") == 0)
+                {
+                    if (insert_node(current_node) != TREE_SUCCESS)
+                        return TREE_ALLOCATION_MEMORY_ERROR;
+
+                    return TREE_SUCCESS;
+                }
+                else
+                    break;
             }
 
         }
     }
 
-    return;
+    return TREE_SUCCESS;
+}
+
+int insert_node (Node *node)
+{
+
+    assert(node);
+
+    char *item = (char*)calloc(max_size, sizeof(char));
+    if (!item)
+    {
+        printf ("Allocation Error\n");
+        return TREE_ALLOCATION_MEMORY_ERROR;
+    }
+    printf ("What did you think of ?\n");
+    scanf ("%s", item);
+
+    char *dif = (char*)calloc(max_size, sizeof(char));
+    if (!dif)
+    {
+        printf ("Allocation Error\n");
+        return TREE_ALLOCATION_MEMORY_ERROR;
+    }
+
+
+    printf ("What feature does %s have, unlike %s ?\n", item, node->data);
+    scanf("%s", dif);
+
+    //fgets(item, max_size, stdin);
+    // fgets(dif, max_size, stdin);
+
+    Node *right_leaf = (Node *)calloc (1, sizeof(Node));
+
+    if (!right_leaf)
+    {
+        printf ("Allocation Error\n");
+        return TREE_ALLOCATION_MEMORY_ERROR;
+    }
+
+
+    Node *left_leaf = (Node *)calloc (1, sizeof(Node));
+
+    if (!left_leaf)
+    {
+        printf ("Allocation Error\n");
+        return TREE_ALLOCATION_MEMORY_ERROR;
+    }
+
+    node->right = right_leaf;
+    right_leaf->data = item;
+    right_leaf->parent = node;
+
+    node->left = left_leaf;
+    left_leaf->data = node->data;
+    left_leaf->parent = node;
+
+    node->data = dif;
+
+    return TREE_SUCCESS;
 }
 
 bool is_leaf(Node *node)

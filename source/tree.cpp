@@ -90,36 +90,7 @@ int get_size_of_file (const char *name_of_file)
     return buffer.st_size;
 }
 
-void insert_node (Node *node, info_t value)
-{
 
-    assert(node);
-
-    if (value < node->data)
-    {
-        if (node->left == NULL)
-        {
-            struct Node *new_node = (Node*)calloc (1, sizeof(struct Node));
-            node->left = new_node;
-            new_node->data = value;
-        }
-        else
-            insert_node(node->left, value);
-    }
-    else
-    {
-        if (node->right == NULL)
-        {
-            struct Node *new_node = (Node *) calloc (1, sizeof(Node));
-            node->right = new_node;
-
-            new_node->data = value;
-        }
-        else
-            insert_node(node->right, value);
-    }
-
-}
 
 void print_tree (Node *node)
 {
