@@ -51,6 +51,7 @@ int main(const int argc, const char* argv[])
         }
     }
 
+    record_tree_to_file(&my_tree, my_tree.root_tree, "test.txt");
     dump (&node, my_tree.pfile_dump);
     tree_dtor(&my_tree);
 

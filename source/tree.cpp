@@ -9,6 +9,8 @@
 #include "tree.h"
 #include "akinator.h"
 
+
+void record_node (Node *node, FILE *file, int *count_space);
 int get_size_of_file (const char *name_of_file);
 
 int reading_tree (Tree *my_tree)
@@ -34,6 +36,55 @@ int reading_tree (Tree *my_tree)
     return TREE_SUCCESS;
 }
 
+int record_tree_to_file (Tree *my_tree, Node *node, const char* name_of_file)
+{
+    assert(my_tree);
+
+    my_tree->pfile_tree = fopen(name_of_file, "w");
+
+    if (!my_tree->pfile_tree)
+    {
+        printf("File hasn't opened");
+        return TREE_FILE_NOT_OPENED;
+    }
+    int count_space = 0;
+    record_node(node, my_tree->pfile_tree, &count_space);
+
+    if (fclose(my_tree->pfile_tree) != 0)
+    {
+        printf ("File hasn't closed");
+        return TREE_FILE_NOT_CLOSED;
+    }
+    return TREE_SUCCESS;
+
+}
+
+void record_node (Node *node, FILE *file, int *count_space)
+{
+    assert(node);
+    assert(file);
+
+    for (int index = 0; index < *count_space; index++)
+        fprintf(file, "    ");
+
+    fprintf(file, "{%s\n", node->data);
+    if (!is_leaf(node))
+    {
+        (*count_space)++;
+
+        record_node(node->right, file, count_space);
+
+        record_node(node->left, file, count_space);
+
+        (*count_space)--;
+
+    }
+
+    for (int index = 0; index < *count_space; index++)
+        fprintf(file, "    ");
+    fprintf(file,"}\n");
+
+}
 
 void import_to_tree (Tree *my_tree, Node *node)
 {

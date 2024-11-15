@@ -45,7 +45,7 @@ int guess(Tree *my_tree)
                 if(strcmp(answer, "YES") == 0)
                 {
                     if (insert_node(current_node) != TREE_SUCCESS)
-                        return TREE_ALLOCATION_MEMORY_ERROR;
+                        return TREE_INSERT_ERROR;
 
                     return TREE_SUCCESS;
                 }
@@ -73,6 +73,10 @@ int insert_node (Node *node)
     printf ("What did you think of ?\n");
     scanf ("%s", item);
 
+    //fread(item, sizeof(char), max_size, stdin);
+    // if (!(item = fgets(str, max_size, stdin)))
+    //     return TREE_READ_ERROR;
+
     char *dif = (char*)calloc(max_size, sizeof(char));
     if (!dif)
     {
@@ -84,8 +88,10 @@ int insert_node (Node *node)
     printf ("What feature does %s have, unlike %s ?\n", item, node->data);
     scanf("%s", dif);
 
-    //fgets(item, max_size, stdin);
-    // fgets(dif, max_size, stdin);
+    //fread(item, sizeof(char), max_size, stdin);
+
+    // if (!fgets(dif, max_size, stdin))
+    //     return TREE_READ_ERROR;
 
     Node *right_leaf = (Node *)calloc (1, sizeof(Node));
 
@@ -116,6 +122,7 @@ int insert_node (Node *node)
 
     return TREE_SUCCESS;
 }
+
 
 bool is_leaf(Node *node)
 {
