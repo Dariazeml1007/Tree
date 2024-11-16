@@ -11,8 +11,6 @@
 #include "akinator.h"
 #include "arg.h"
 
-
-
 int main(const int argc, const char* argv[])
 {
     struct Node node = {};
@@ -27,8 +25,6 @@ int main(const int argc, const char* argv[])
         assert(0 && "Reading tree from file error");
 
     import_to_tree (&my_tree, &node);
-
-    //dump (&node, my_tree.pfile_dump);
 
     process_args(argc, argv, &flags);
 
@@ -46,12 +42,20 @@ int main(const int argc, const char* argv[])
         if (guess(&my_tree) != TREE_SUCCESS)
         {
             tree_dtor(&my_tree);
-            printf("problem");
             assert(0 && "Guess error");
         }
     }
 
-    record_tree_to_file(&my_tree, my_tree.root_tree, "test.txt");
+    if (flags.is_dif)
+    {
+        if (difference(&my_tree) != TREE_SUCCESS)
+        {
+            tree_dtor(&my_tree);
+            assert(0 && "Guess error");
+        }
+    }
+
+    record_tree_to_file(&my_tree, my_tree.root_tree, "tree.txt");
     dump (&node, my_tree.pfile_dump);
     tree_dtor(&my_tree);
 

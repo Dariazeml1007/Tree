@@ -67,7 +67,7 @@ void record_node (Node *node, FILE *file, int *count_space)
     for (int index = 0; index < *count_space; index++)
         fprintf(file, "    ");
 
-    fprintf(file, "{%s\n", node->data);
+    fprintf(file, "{\"%s\"\n", node->data);
     if (!is_leaf(node))
     {
         (*count_space)++;
@@ -119,10 +119,7 @@ void import_to_tree (Tree *my_tree, Node *node)
         node->left->parent = node;
         import_to_tree(my_tree, node->left);
     }
-    else
-    {
-        return;
-    }
+    return;
 }
 
 int get_size_of_file (const char *name_of_file)
@@ -140,8 +137,6 @@ int get_size_of_file (const char *name_of_file)
 
     return buffer.st_size;
 }
-
-
 
 void print_tree (Node *node)
 {

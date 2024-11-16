@@ -1,26 +1,22 @@
-{MIPT subject
-    {Math
-        {about limits, differentials
-            {Calculus
+{"MIPT subject"
+    {"Math"
+        {"about limits, differentials"
+            {"Calculus"
             }
-            {about vectors, basis
-                {Angem
+            {"about vectors, basis"
+                {"Angem"
                 }
-                {Discra
+                {"Discra"
                 }
             }
         }
-        {hard suffer
-            {Physics
+        {"hard suffer"
+            {"Physics"
             }
-            {Proga
+            {"Proga"
             }
         }
     }
-    {animal
-        {monkey
-        }
-        {Humanitarian
-        }
+    {"Humanitarian"
     }
 }

@@ -17,7 +17,8 @@ int process_args (const int argc, const char* argv[], Argv_type *flags)
     if (argc == 1)
     {
         printf ("You can use flag --guess\n"
-                "You can use flag --define\n");
+                "You can use flag --define\n"
+                "You can use flag --dif\n");
         return TREE_SUCCESS;
     }
 
@@ -31,6 +32,10 @@ int process_args (const int argc, const char* argv[], Argv_type *flags)
         else if (strcmp(argv[1], "--define") == 0)
         {
             flags->is_define = true;
+        }
+        else if (strcmp(argv[1], "--dif") == 0)
+        {
+            flags->is_dif = true;
         }
         else
         {
