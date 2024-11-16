@@ -17,6 +17,7 @@ int create_array_features (Item_t *item);
 int dump_different(Item_t* item_first, Item_t* item_second);
 int dump_similar (Item_t* item_first, Item_t* item_second, int *flag_is_nothing_in_common);
 int ctor_item(Tree *my_tree, Item_t *item);
+int dtor_item (Item_t *item);
 
 int guess(Tree *my_tree)
 {
@@ -201,6 +202,14 @@ int ctor_item(Tree *my_tree, Item_t *item)
 
 }
 
+int dtor_item (Item_t *item)
+{
+    assert(item);
+
+    free(item->array_features);
+    free(item->name);
+}
+
 int define (Tree *my_tree)
 {
     assert(my_tree);
@@ -225,8 +234,8 @@ int define (Tree *my_tree)
     }
 
     printf ("\n");
-    free(item.array_features);
-    free(item.name);
+    dtor_item(&item);
+
     return TREE_SUCCESS;
 
 }
@@ -261,7 +270,6 @@ int difference (Tree *my_tree)
 
     while (item_first.array_features[item_first.amount_of_features] == item_second.array_features[item_second.amount_of_features])
     {
-
         dump_similar(&item_first, &item_second, &flag_is_nothing_in_common);
 
         item_first.amount_of_features--;
@@ -274,10 +282,9 @@ int difference (Tree *my_tree)
         dump_different(&item_first, &item_second);
 
     printf ("\n");
-    free(item_first.array_features);
-    free(item_second.array_features);
-    free(item_first.name);
-    free(item_second.name);
+
+    dtor_item(&item_first);
+    dtor_item(&item_second);
 
     return TREE_SUCCESS;
 }
